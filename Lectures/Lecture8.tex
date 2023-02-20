@@ -59,7 +59,9 @@
         return J
         \end{verbatim}
         \begin{itemize}
-            \item Proof of Correctness: 
+            \item Define $n_t$ as the number of uncovered points after $t$ iterations. Example: $n_0=|U|, n_1=...$. Lemma: $n_{t+1}\leq n_t - \frac{n_t}{|J*|}$. Since $|J*|$ is the optimal solution, the minimum number of subsets that covers $U$ is $|J*|$. Therefore, the size of the next subset chosen by the algorithm in $n_t$ has to be at least $\frac{n_t}{|J*|}$ since by definition, the algorithm chooses the subset that can add the most points.
+            
+            \item Proof that this algorithm outputs a solution $|J|$ that's within a logarithmic coefficient to the real optimal solution $|J*|$ involves algebraic manipulation of the lemma defined above.
         \end{itemize}
     \end{enumerate}
 
@@ -70,7 +72,7 @@
     \item Summary: Which shortest path algorithm to use?
         \begin{itemize}
             \item Any graph (cycles or not) and lengths > 0 $\rightarrow$ Dijkstra
-            \item Grpah w/o negative cycles $\rightarrow$ BF (can in fact detect)
+            \item Graph w/o negative cycles $\rightarrow$ BF (can in fact detect)
         \end{itemize}
     \item There is not a "fully optimal" algorithm that runs in polynomial time for set cover, though the existing algorithm is at the logarithmic coefficient to the optimal solution.
 \end{enumerate}

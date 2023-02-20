@@ -1,0 +1,57 @@
+% TeX root = ../Main.tex
+
+% First argument to \section is the title that will go in the table of contents. Second argument is the title that will be printed on the page.
+% \section[Lecture 13 (2/13) -- {\it Paths in Graphs}]{Lecture 13 (2/13)}
+\section[Dijkstras, Bellman-Ford -- {\it Lecture 7}]{Dijkstras, Bellman-Ford}
+
+
+
+\subsection{Algorithms}
+
+    \begin{enumerate}
+        \item \textbf{Dijkstra}
+        \begin{verbatim}
+            asdf
+        \end{verbatim}
+        \item \textbf{Bellman-Ford}: Visualize the algorithm as running through a table. Outer loop takes down the rows (vertices), inner loop takes down the columns (edges). Then we argue that the table contains all the possible paths, and so it will contain the shortest path.
+            \begin{verbatim}
+            dist[s]=0, dist[v-s]=inf
+            for i in |v|-1:
+                for all edges:
+                    update(e)
+            \end{verbatim}
+
+            \begin{itemize}
+                \item Runtime: $O(|V|*|E|)$
+                \item Dijkstra is basically a trimmed down BF since we are selective choosing a very particular order of updates so we will do fewer updates in total, using the priority queue as a guide to choose what's the next edge to update, whereas BF goes for all the paths.
+            \end{itemize}
+        
+    \end{enumerate}
+
+
+
+\subsection{Notable Concepts}
+
+    \begin{enumerate}
+        \item Proof of Correctness for Dijkstra
+            \begin{itemize}
+                \item Base case: subset $K$ of $V$ where we know the shortest path from $s$ to all $v\in K$
+                \item Inductive step: To prove the statement that, if a vertex $A$ is the nearest vertex right outside the boundary of $K$, then we also know its shortest path. Prove use contradiction by assuming that there exist another vertex $B$ between boundary of $K$ and $A$ that has the shortest distance, but we know that is not possible given that we know $A$ already has the shorte
+            \end{itemize}
+        \item Important properties of the update subroutine of Dijkstra:
+            \begin{itemize}
+                \item update(u, v) $\equiv$ dist[v] = min(dist[v], dist[u] + length(u, v))
+                \item update is "safe": provided that dist[u] is at least the correct answer (dist(s, u)) AND dist[v] is also at least dist(s,v), the the updated dist[v] is as good as the correct distance dist(s,v)
+                \item If we know a path from s to v that is currently known as the shortest path and that dist[u] is correct, then calling update[u, v] makes dist[v] correct.
+            \end{itemize}
+        \item When talking about negative edges, we care about graphs without negative cycles.
+        \item Dijkstra's correctness relies on the fact that the further you go down the path, the greater the truth. But this fact is not true anymore when you have negative edges, since an immediate edge with expensive weights can have edges with negative weights after it that makes the entire path the shortest.
+
+        
+        
+    \end{enumerate}
+
+
+
+
+

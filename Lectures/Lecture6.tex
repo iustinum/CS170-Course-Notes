@@ -1,0 +1,64 @@
+% TeX root = ../Main.tex
+
+% First argument to \section is the title that will go in the table of contents. Second argument is the title that will be printed on the page.
+% \section[Lecture 6 SP 20 -- {\it DFS, Find SCC, BFS}]{Lecture 6 SP 20}
+\section[DFS, Find SCC, BFS -- {\it Lecture 6}]{DFS, Find SCC, BFS}
+
+
+\subsection{Algorithms: }
+    \begin{enumerate}
+        \item \textbf{Finding SCC}:
+        \begin{verbatim}
+        deduce G^R from G
+        Run DFS on G^R to have post numbers
+        For v in revesre post order of G^R:
+            if not visited[V]:
+                explore(G, v)
+                SCC++
+        \end{verbatim}
+            \begin{itemize}
+                \item Main idea: Run explore() on some node in sink SCC.
+                \item Intuition: When we run DFS on some sink node, we can trace back the entire SCC. It does not work the other way around since running DFS on source node goes all over the place
+                \item Get $G^R$ (G but with all edges in reverse order). Run DFS on $G^R$ to get the post numbers of all vertices. This is to get all the sink nodes equivalents in the original graph in a particular order. For all vertices in $G^R$ in reverse post number, run explore(G, V). When we done exploring from that node, we know we have identified one SCC.
+            \end{itemize}
+        \item \textbf{BFS}:
+        \begin{verbatim}
+        def BFS(G, s)
+            dist[s] = 0
+            dist[V-S]=inf
+            queue = [s]
+            while q:
+                for (u,v) in E:
+                    if dist[v] = inf: # if v is unvisited
+                        queue.add(v)
+                        dist[v] = dist[u] + 1                    
+        \end{verbatim}
+            \begin{itemize}
+                \item Runtime: V + E since we are seeing all vertices and edges only once
+            \end{itemize}
+    \end{enumerate}
+
+\subsection{Notable Concepts}
+
+\begin{enumerate}
+    \item Strong Connected Graph: any pair of vertices can reach each other forwards and backwards
+
+    \item A strongly connected graph can have only one strongly connected component, whereas a connected directed graph can have multiple strongly connected components
+
+    \item Every digraph G is a DAG on SCCs
+        \begin{itemize}
+            \item Otherwise, it would shrink back into a super-strongly connected component
+        \end{itemize}
+    \item DFS, and types of directed edges: (when keeping track of DFS pre/post order times)
+        \begin{itemize}
+            \item Tree edges and Forward edges: The beginning vertex has an interval that contains the interval of the destination vertex.
+            \item Back Edges: The destination vertex has an interval that contains the interval of the beginning vertex.
+            \item Cross Edges: The intervals are disjoint.
+        \end{itemize}
+
+\end{enumerate}
+
+
+
+
+

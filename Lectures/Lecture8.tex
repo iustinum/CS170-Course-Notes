@@ -1,0 +1,78 @@
+\section[Negative Cycle, DAG shortest path, Greedy -- {\it Lecture 8}]{Negative Cycle, DAG shortest path, Greedy}
+
+\subsection{Algorithms: }
+    \begin{enumerate}
+        \item \textbf{Detecting negative cycle}: Run one additional iteration of Bellman-Ford after the algorithm finishes running. If there's change in the distance of shortest path, then there is a negative cycle.
+        \begin{verbatim}
+        Run Bellman-Ford
+        for all edges:
+            if update(e) modifies distance of endpoints:
+                halt and output "NEG cylce"
+        \end{verbatim}
+
+        \begin{itemize}
+            \item Proof:
+            
+            Correctness of Bellman-Ford suggests that if there are no negative cycles $\rightarrow$ nothing changes.
+            
+            Now we want to show that if nothing changes $\rightarrow$ no negative cycles.
+
+            Consider a graph with two vertices $a, b$. There is a cycle where $a$ points to $b$ and vice versa. We want to show that length($a, b$) + length($b, a$) $\geq$0. Given that nothing changes, we know that dist[b]$\leq$dist[a]+length(a,b) and dist[a]$\leq$dist[b]+length(b,a). If we add the inequalities up, we find that length(a,b)+length(b,a) is indeed $\geq$ 0.
+
+            \item Runtime:
+
+            Same as Bellman-Ford: $O(V\cdot E)$
+            
+        \end{itemize}
+
+        \item \textbf{Finding shortest path in DAG}:
+        \begin{verbatim}
+        Topologically sort the graph
+        for all v in topo order:
+            for all (v,w): # for all neighbors of v
+                update(v,w)
+        \end{verbatim}
+
+        \begin{itemize}
+            \item Runtime: $O(V+E)$ since sorting takes $V$ runtime and we check each edge once.
+        \end{itemize}
+
+        \item \textbf{Largest of non-overlapping intervals: }
+        \begin{verbatim}
+        sort(intervals) in ascending endtimes
+        Choose the earliest interval, put it in set S
+        for all interval in (intervals - S):
+            if interval does not overlap last interval in S:
+                S.add(interval)
+        return len(S)
+        \end{verbatim}
+        \begin{itemize}
+            \item Proof of Correctness: Suppose greedy solution $G$ is not optimal. Pick an optimal solution $S$, where $S$ has the most overlapping with G ($max(G\cap S)$). Now consider a new solution $S'$ with same entries as $S$. Say $S'$ comprises of intervals $S_1, S_2, \cdots, S_n$. Now we go to first point in $S'$ where the interval starts differing, $S_i$, and we replace it with the corresponding interval in $G_i$. $G_i$ fits in with the previous intervals because $G$ was part of the solution of $G$. Moreover, by definition of the greedy algorithm, $G_i$ will also be the interval with the earliest end time after all previous intervals, thus $G_i$ can fit in the original interval $S_i$ that it replaces. Perform the same action to the remaining differing intervals. After replacement, $S'$ will have more intersection with $G$ than $S$ from all the new intervals from $G$, which contradicts with our prior claim that $S$ has the highest resemblance to $G$.
+        \end{itemize}
+
+        \item \textbf{Set Cover: }
+        \begin{verbatim}
+        J = {}
+        while unions of sets in J != U:
+            pick a set not in J that adds the most new elements
+            add that set to J
+        return J
+        \end{verbatim}
+        \begin{itemize}
+            \item Proof of Correctness: 
+        \end{itemize}
+    \end{enumerate}
+
+
+\subsection{Notable Concepts}
+
+\begin{enumerate}
+    \item Summary: Which shortest path algorithm to use?
+        \begin{itemize}
+            \item Any graph (cycles or not) and lengths > 0 $\rightarrow$ Dijkstra
+            \item Grpah w/o negative cycles $\rightarrow$ BF (can in fact detect)
+        \end{itemize}
+    \item There is not a "fully optimal" algorithm that runs in polynomial time for set cover, though the existing algorithm is at the logarithmic coefficient to the optimal solution.
+\end{enumerate}
+
+
